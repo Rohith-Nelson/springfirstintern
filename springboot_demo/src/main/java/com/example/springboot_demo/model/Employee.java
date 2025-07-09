@@ -13,7 +13,7 @@ public class Employee {
     }
 
     // Getters
-    public int getUserid() {
+    public int getEmpid() {
         return empid;
     }
 

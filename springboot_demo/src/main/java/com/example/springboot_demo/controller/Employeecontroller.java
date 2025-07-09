@@ -8,31 +8,38 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.springboot_demo.model.*;
 
+@RequestMapping("/employee")
 @RestController
 public class Employeecontroller {
     @Autowired
     Employeeservice service;
-    @GetMapping("/")
+
+    @GetMapping
     public List<Employee> getAllEmployees() {
         return service.getEmployees();
     }
 
 
-    @PostMapping("/")
-    public String postMethod() {
-        return service.postEmployee();
+    @GetMapping("/{empId}")
+    public Employee getEmployeeById(@PathVariable int empId) {
+        return service.getEmployeeById(empId);
     }
 
 
-    @PutMapping("/")
-    public String putMethod() {
-        return service.putMethod();
+    @PostMapping
+    public String postMethod(@RequestBody Employee employee) {
+        return service.postEmployee(employee);
     }
 
 
-    @DeleteMapping("/")
-    public String deleteMethod() {
-        return service.deleteMethod();
+    @PutMapping()
+    public String putMethod(@RequestBody Employee employee) {
+        return service.updateEmployee(employee);
     }
 
+
+    @DeleteMapping("/{empId}")
+    public String deleteEmpbyId(@PathVariable int empId) {
+        return service.deleteEmployeeById(empId);
+    }
 }
