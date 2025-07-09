@@ -7,40 +7,44 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Springboot .model.*;
 
-@RequestMapping("/employee")
 @RestController
 public class Employeecontroller {
     @Autowired
     Employeeservice service;
 
-    @GetMapping
+    @GetMapping("/")
+    public String route(){
+        return "Welcome to SpringSecurity";
+    }
+
+    @GetMapping("/employee")
     public List<Employee> getAllEmployees() {
         return service.getEmployees();
     }
 
 
-    @GetMapping("/{empId}")
+    @GetMapping("/employee/{empId}")
     public Employee getEmployeeById(@PathVariable int empId) {
         return service.getEmployeeById(empId);
     }
 
-    @GetMapping("/job/{job}")
+    @GetMapping("/employee/job/{job}")
     public List<Employee> getEmployeeByJob(@PathVariable String job) {
         return service.getEmployeebyJob(job);
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/employee/name/{name}")
     public List<Employee> getEmployeeByName(@PathVariable String name) {
         return service.getEmployeebyName(name);
     }
 
-    @PostMapping
+    @PostMapping("/employee")
     public String postMethod(@RequestBody Employee employee) {
         return service.postEmployee(employee);
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/employee/{id}")
     public String putMethod(@PathVariable int id,@RequestBody Employee employee) {
         return service.updateEmployee(id,employee);
     }
