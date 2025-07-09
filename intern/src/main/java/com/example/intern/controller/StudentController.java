@@ -5,7 +5,6 @@ import com.example.intern.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -22,14 +21,20 @@ public class StudentController {
     public Student getMethod(@PathVariable int id){
         return service.getStudentbyId(id);
     }
+
+    @GetMapping("/name/{name}")
+    public List<Student> getMethodByName(@PathVariable String name){
+        return service.getStudentbyName(name);
+    }
+
     @PostMapping
     public String postMethod(@RequestBody Student student){
         return service.postStudent(student);
     }
 
-    @PutMapping
-    public String putMethod(@RequestBody Student student){
-        return service.updateStudent(student);
+    @PutMapping("/{id}")
+    public String putMethod(@PathVariable int id,@RequestBody Student student){
+        return service.updateStudent(id,student);
     }
 
     @DeleteMapping("/{id}")

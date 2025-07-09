@@ -1,37 +1,52 @@
 package com.example.intern.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
+//@Data
+@NoArgsConstructor
+@Entity
 public class Student {
-    private int Student_id;
-    private String Student_Name;
-    private String Student_Email;
-    private String Student_Phone;
 
-    public Student(int Student_id, String Student_Name, String Student_Email, String Student_Phone) {
-        this.Student_id = Student_id;
-        this.Student_Name = Student_Name;
-        this.Student_Email = Student_Email;
-        this.Student_Phone = Student_Phone;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+
+    private String studentName;
+    private String studentEmail;
+    private String studentPhone;
+
+    public Student(){
+
     }
 
-    public String getStudent_Name() {
-        return Student_Name;
+
+    public Student(int id, String studentName, String studentEmail, String studentPhone) {
+        this.id = id;
+        this.studentName = studentName;
+        this.studentEmail = studentEmail;
+        this.studentPhone = studentPhone;
     }
 
-    public String getStudent_Email() {
-        return Student_Email;
+    public int getId() {
+        return id;
     }
 
-    public String getStudent_Phone() {
-        return Student_Phone;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public int getStudent_id() {
-        return Student_id;
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public String getStudentPhone() {
+        return studentPhone;
     }
 }
 

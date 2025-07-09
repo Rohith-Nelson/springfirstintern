@@ -1,6 +1,8 @@
 package com.example.intern.services;
 
 import com.example.intern.models.Student;
+import com.example.intern.repository.Studentrepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -10,46 +12,33 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    List<Student> stud=new ArrayList<>(
-            Arrays.asList(new Student(1,"Nidhish","nid@gmail.com","xxyyyxyxyx"),
-                    new Student(2,"padma","cxx@gmail.com","cdsaddvfse")
 
-            )
-    );
+    @Autowired
+    Studentrepo repo;
 
     public List<Student> getStudents(){
-        return stud;
+        return repo.findAll();
     }
 
     public Student getStudentbyId(int id){
-        for(Student s :stud){
-            if(s.getStudent_id()==id){
-                return s;
-            }
-        }
-        return null;
+        return repo.findById(id);
+    }
+
+    public List<Student> getStudentbyName(String name){
+        return repo.findByStudentName(name);
     }
 
     public String postStudent(Student student){
-//       System.out.println("Enter student id:");
-//       Scanner sc=new Scanner(System.in);
-//       int id=sc.nextInt();
-//       System.out.println("Enter student name:");
-//       String name=sc.next();
-//       System.out.println("Enter student email:");
-//       String email=sc.next();
-//       System.out.println("Ener student phone number:");
-//       String phone=sc.next();
-//       Student st=new Student(id,name,email,phone);
-          stud.add(student);
-       return "Student added successfully";
+          repo.save(student);
+          return "Student added successfully";
     }
 
-    public String updateStudent(@RequestBody Student student){
-        for(Student s :stud){
-            if(s.getStudent_id()==student.getStudent_id()){
-                stud.remove(s);
-                stud.add(student);
+    public String updateStudent(int id,Student student){
+        List<Student> students = repo.findAll();
+        for(Student s : students){
+            if(s.getId() == id){
+                repo.deleteById(id);
+                repo.save(student);
                 return "Student updated successfully";
             }
         }
@@ -57,12 +46,7 @@ public class StudentService {
     }
 
     public String deleteStudent(int id){
-        for(Student s :stud){
-            if(s.getStudent_id()==id){
-                stud.remove(s);
-                return "Student deleted successfully";
-            }
-        }
-        return "Student not found";
+        repo.deleteById(id);
+        return "Student deleted successfully";
     }
 }
